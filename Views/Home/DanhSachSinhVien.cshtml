@@ -1,0 +1,23 @@
+﻿@model IEnumerable<ThucTap1.Models.SinhVien>
+
+<h2>Danh Sách Sinh Viên</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Mã Sinh Viên</th>
+            <th>Họ Tên</th>
+            <th>Khoa</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sinhVien in Model)
+        {
+            <tr>
+                <td>@sinhVien.MaSV</td>
+                <td>@sinhVien.HoTenSV</td>
+                <td>@sinhVien.MaKhoa</td>
+            </tr>
+        }
+    </tbody>
+</table>

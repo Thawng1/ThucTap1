@@ -1,0 +1,80 @@
+﻿
+@model IEnumerable<dynamic>;
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<form method="get" asp-action="Index">
+    <label for="khoaFilter">Search by Khoa:</label>
+    <select name="khoaFilter" id="khoaFilter">
+        <option value="">All</option>
+        @foreach (var khoa in ViewBag.KhoaFilter)
+        {
+            <option value="@khoa.Value">@khoa.Text</option>
+        }
+    </select>
+    <input type="submit" value="Filter" />
+</form>
+
+<form method="get" asp-action="Index">
+    <label for="search">Search by Student ID or Name:</label>
+    <input type="text" name="searchTerm" id="searchTerm" />
+    <input type="submit" value="Search" />
+</form>
+
+<p>Total SinhViens: @ViewBag.TotalSinhViens</p>
+<p>Total GiangViens: @ViewBag.TotalGiangViens</p>
+
+<form method="get" action="@Url.Action("DanhsachSinhVien", "Home")" class="form-inline">
+    <div class="form-group">
+        <label for="MaKhoa">Mã Khoa:</label>
+        <input type="text" name="MaKhoa" class="form-control" placeholder="Nhập mã khoa" />
+    </div>
+    <div class="form-group">
+        <label for="MaGV">Mã Giảng Viên:</label>
+        <input type="text" name="MaGV" class="form-control" placeholder="Nhập mã giảng viên" />
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Student Name</th>
+                <th>MaKhoa</th>
+                <th>NamSinh</th>
+                <th>QueQuan</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.SinhVien.MaSV</td>
+                    <td>@item.SinhVien.HoTenSV</td>
+                    <td>@item.SinhVien.MaKhoa</td>
+                    <td>@item.SinhVien.NamSinh</td>
+                    <td>@item.SinhVien.QueQuan</td>
+                    
+                </tr>
+            <td>
+                <a href="@Url.Action("ThongTinDiem", "Home", new { masv = item.SinhVien.MaSV })" class="btn btn-info">
+                    Detail
+                </a>
+            </td>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No results found.</p>
+}
+
+
+
